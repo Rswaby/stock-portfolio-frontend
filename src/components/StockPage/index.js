@@ -49,7 +49,7 @@ class StockPage extends Component {
             null
         )
 
-        this.props.history.push(ROUTES.ACCOUNT);
+        this.props.history.push(ROUTES.LANDING);
 
         // sleep(1000);
         event.preventDefault();

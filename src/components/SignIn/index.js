@@ -49,7 +49,7 @@ class SignInFormBase extends Component {
       .then(() => {
         // console.log("signing in ")
         this.setState({ ...INITIAL_STATE });
-        this.props.history.push(ROUTES.HOME);
+        this.props.history.push(ROUTES.LANDING);
       })
       .catch(error => {
         this.setState({ error });
