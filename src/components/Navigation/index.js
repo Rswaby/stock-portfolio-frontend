@@ -27,10 +27,7 @@ const Navigation = () => (
 const NavigationAuth = ({ authUser }) => (
   <div className={" blue-bar navbar navbar-default navbar-light justify-content-end"}>
     <div id={"nav-bar-item"}>
-      <Link style={style.link} to={ROUTES.HOME}>HOME</Link>
-    </div>
-    <div id={"nav-bar-item"}>
-      <Link style={style.link} to={ROUTES.LANDING}>BROWSE</Link>
+      <Link style={style.link} to={ROUTES.LANDING}>BROWSE STOCKS</Link>
     </div>
     <div id={"nav-bar-item"}>
       <Link style={style.link} to={ROUTES.ACCOUNT}>PORTFOLIO</Link>
