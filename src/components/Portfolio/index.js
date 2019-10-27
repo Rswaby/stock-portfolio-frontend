@@ -45,7 +45,9 @@ class Porfolio extends Component {
         return (
             <div className="porfolio-detials">
                 <div className="porfolio-rows">
-                    <h5 className="centr m-top-5">Transaction History</h5>
+                    <h5 className="centr m-top-5">
+                        Transaction History
+                    </h5>
                     {transInfoLoaded ? transData.map((transac) =>
                         <div className="trans-card">
                             <h5>{transac.stock}</h5>
@@ -59,7 +61,8 @@ class Porfolio extends Component {
                     }
                 </div>
                 <div>
-                    <h5 className="centr m-top-5">Porfolio</h5>
+                    <h5 className="centr m-top-5"> Porfolio </h5>
+                    <h6 className="centr"><span style={{color:"green"}}> Funds available: ${localStorage.getItem("bank")}</span></h6>
                 </div>
             </div>
         )

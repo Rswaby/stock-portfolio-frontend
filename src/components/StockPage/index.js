@@ -49,7 +49,7 @@ class StockPage extends Component {
             null
         )
 
-        this.props.history.push(ROUTES.LANDING);
+        //this.props.history.push(ROUTES.LANDING);
 
         // sleep(1000);
         event.preventDefault();
@@ -88,6 +88,7 @@ class StockPage extends Component {
         }).then((res) => {
             console.log(res.data)
             localStorage.setItem('bank', res.data['moneyLeft'])
+            this.props.history.push(ROUTES.ACCOUNT);
         }, (error) => { console.log(error) })
     }
     onChange = event => {
@@ -134,6 +135,7 @@ class StockPage extends Component {
                                 authUser ? (
                                     <div className="form">
                                         <form className={"login-form"} onSubmit={this.onSubmit}>
+                                            <h6 style={{color:"green"}}>Funds avail: ${localStorage.getItem('bank')}</h6>
                                             <h5>${costPershar * shares}</h5>
                                             <input
                                                 name="shares"

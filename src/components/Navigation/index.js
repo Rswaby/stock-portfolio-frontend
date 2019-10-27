@@ -30,7 +30,7 @@ const NavigationAuth = ({ authUser }) => (
       <Link style={style.link} to={ROUTES.LANDING}>BROWSE STOCKS</Link>
     </div>
     <div id={"nav-bar-item"}>
-      <Link style={style.link} to={ROUTES.ACCOUNT}>PORTFOLIO</Link>
+      <Link style={style.link} to={ROUTES.ACCOUNT}>ACCOUNT</Link>
     </div>
     {!!authUser.roles[ROLES.ADMIN] && (
       <div id={"nav-bar-item"}>
@@ -46,7 +46,7 @@ const NavigationAuth = ({ authUser }) => (
 const NavigationNonAuth = () => (
   <nav className={"blue-bar navbar navbar-default navbar-light justify-content-end"}>
     <div id={"nav-bar-item"} className={"nav-item"}>
-      <Link style={style.link} to={ROUTES.LANDING}>LANDING</Link>
+      <Link style={style.link} to={ROUTES.LANDING}>BROWSE STOCKS</Link>
     </div>
     <div id={"nav-bar-item"} className={"nav-item"}>
       <Link style={style.link} to={ROUTES.SIGN_IN}>SIGN IN</Link>
