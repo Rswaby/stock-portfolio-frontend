@@ -56,7 +56,7 @@ class SignUpFormBase extends Component {
         // Create a user in your Firebase realtime database
         //also create user in local db
         console.log("AUTHUSER: ", authUser)
-        this.createStockUser(authUser.user.uid,email);
+        this.createStockUser(authUser.user.uid, email);
         return this.props.firebase.user(authUser.user.uid).set({
           username,
           email,
@@ -73,9 +73,11 @@ class SignUpFormBase extends Component {
       .catch(error => {
         if (error.code === ERROR_CODE_ACCOUNT_EXISTS) {
           error.message = ERROR_MSG_ACCOUNT_EXISTS;
+          this.setState({ error });
         }
+        console.log("ERROR:  ",  error, this.state)
+        this.props.history.push(ROUTES.LANDING);
 
-        this.setState({ error });
       });
 
 
