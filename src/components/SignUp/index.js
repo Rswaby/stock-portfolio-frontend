@@ -74,10 +74,10 @@ class SignUpFormBase extends Component {
         if (error.code === ERROR_CODE_ACCOUNT_EXISTS) {
           error.message = ERROR_MSG_ACCOUNT_EXISTS;
           this.setState({ error });
+        } else {
+          console.log("ERROR:  ", error, this.state)
+          this.props.history.push(ROUTES.LANDING);
         }
-        console.log("ERROR:  ",  error, this.state)
-        this.props.history.push(ROUTES.LANDING);
-
       });
 
 
