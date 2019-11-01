@@ -7,7 +7,7 @@
 # "./script" and leave it alone in your terminal window. Note that this script
 # will continue running unless you force it to stop.
 # Adjust number of minutes.
-time=15
+time=5
 # Change URL if needed.
 URL=https://stock-portfolio-rohan.herokuapp.com
 while true
