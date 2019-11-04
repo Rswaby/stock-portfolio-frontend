@@ -228,7 +228,7 @@ code {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 2fr));
   grid-gap: 1em;
-  grid-auto-rows: minmax(100px, auto);
+  grid-auto-rows: minmax(250px, auto);
   padding: 50px;
 }
 
