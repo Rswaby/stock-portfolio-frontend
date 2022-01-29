@@ -43,9 +43,9 @@ class Firebase {
 
     /* Social Sign In Method Provider */
 
-    this.googleProvider = new app.auth.GoogleAuthProvider();
-    this.facebookProvider = new app.auth.FacebookAuthProvider();
-    this.twitterProvider = new app.auth.TwitterAuthProvider();
+    this.googleProvider = new GoogleAuthProvider();
+    // this.facebookProvider = new app.auth.FacebookAuthProvider();
+    // this.twitterProvider = new app.auth.TwitterAuthProvider();
   }
 
   // *** Auth API ***
@@ -59,11 +59,11 @@ class Firebase {
   doSignInWithGoogle = () =>
     this.auth.signInWithPopup(this.googleProvider);
 
-  doSignInWithFacebook = () =>
-    this.auth.signInWithPopup(this.facebookProvider);
+  // doSignInWithFacebook = () =>
+  //   this.auth.signInWithPopup(this.facebookProvider);
 
-  doSignInWithTwitter = () =>
-    this.auth.signInWithPopup(this.twitterProvider);
+  // doSignInWithTwitter = () =>
+  //   this.auth.signInWithPopup(this.twitterProvider);
 
   doSignOut = () => this.auth.signOut();
 
@@ -79,7 +79,7 @@ class Firebase {
 
   // *** Merge Auth and DB User API *** //
 
-  onAuthUserListener = (next, fallback) =>
+  onAuthUserListener = (next, fallback) =>(
     this.auth.onAuthStateChanged(authUser => {
       if (authUser) {
         this.user(authUser.uid)
@@ -106,7 +106,7 @@ class Firebase {
       } else {
         fallback();
       }
-    });
+    }));
 
   // *** User API ***
 
