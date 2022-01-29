@@ -1,6 +1,20 @@
-import app from 'firebase/app';
-import 'firebase/auth';
-import 'firebase/database';
+import { initializeApp } from "firebase/app";
+import {
+  GoogleAuthProvider,
+  getAuth,
+  signInWithPopup,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
+  signOut } from "firebase/auth";
+ import {
+  getFirestore,
+  query,
+  getDocs,
+  collection,
+  where,
+  addDoc,
+  } from "firebase/firestore";
 
 const config = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -13,17 +27,19 @@ const config = {
 
 class Firebase {
   constructor() {
-    app.initializeApp(config);
-
+    const app = initializeApp(config);
+    
     /* Helper */
 
-    this.serverValue = app.database.ServerValue;
-    this.emailAuthProvider = app.auth.EmailAuthProvider;
+    // this.serverValue = app.database.ServerValue;
+    // this.emailAuthProvider = app.auth.EmailAuthProvider;
 
     /* Firebase APIs */
 
-    this.auth = app.auth();
-    this.db = app.database();
+    
+
+    const auth = getAuth(app);
+    const db = getFirestore(app);
 
     /* Social Sign In Method Provider */
 
