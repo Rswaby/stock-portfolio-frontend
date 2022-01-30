@@ -55,7 +55,7 @@ const SignUpPage = () => {
     setIsLoading(true);
     actions.signUp(email, passwordOne,username)
     .then((ref) => {
-      console.log(ref)
+      console.log("succesful signup",ref)
       setIsLoading(true)
       history.push('/')
      })
