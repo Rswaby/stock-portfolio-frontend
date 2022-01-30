@@ -10,6 +10,7 @@ import {
     sendPasswordResetEmail,
     signOut 
 } from "firebase/auth";
+import axios from 'axios';
 
 import { Auth } from '../Firebase/firebasesp';
 
@@ -37,7 +38,7 @@ export function AuthProvider({ children }){
         let promise = new Promise(function (resolve, reject) {
             createUserWithEmailAndPassword(Auth ,email, password).then((ref) => {
               ref.user.displayName = fullName;
-            //   createStockUser(email,fullName);
+              createStockUser(email,fullName);
               resolve(ref);
             })
             .catch((error) => reject(error));
