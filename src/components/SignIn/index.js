@@ -9,7 +9,7 @@ const SignInPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('')
   const { actions } = useAuth()
-  const history = useHistory
+  const history = useHistory()
   const handleChange = (event) => {
     const elementName = event.target.name;
     const elementValue = event.target.value;
