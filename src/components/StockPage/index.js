@@ -3,10 +3,9 @@ import axios from 'axios';
 import { useAuth } from '../Session/AuthContext';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import * as ROUTES from '../../constants/routes';
-// import sleep from 'sleep';
+
 const StockPage = () => {
     const [isLoading, setIsLoading] = useState('');
-    // const [symbol, setSymbol] = useState('');
     const [shares, setShares] = useState(0);
     const [costPerShare, setCostperShare] = useState(0);
     const [data, setData] = useState({});
@@ -58,8 +57,7 @@ const StockPage = () => {
         }).then((res) => {
             console.log(res.data)
             actions.getUserInfo(email)
-            // localStorage.setItem('bank', res.data['moneyLeft'])
-            // history.push(ROUTES.ACCOUNT);
+            history.push(ROUTES.ACCOUNT);
         }, (error) => { console.log(error) })
     }
 
@@ -85,11 +83,6 @@ const StockPage = () => {
             payed,
             null
         )
-
-        //this.props.history.push(ROUTES.LANDING);
-
-        // sleep(1000);
-
     }
 
     const handleChange = (event) => {
@@ -153,96 +146,4 @@ const StockPage = () => {
         </div>
     )
 }
-// class StockPage extends Component {
-//     state = {
-//         symbol: '',
-//         loaded: '',
-//         shares: 0,
-//         costPershar: 0,
-//         data: {}
-//     }
-//     componentWillMount() {
-//         const { symbol } = this.props.match.params;
-//         this.setState({
-//             symbol: symbol
-//         })
-
-//         if (symbol) {
-//             this.fetchStockInfo(symbol)
-
-//         }
-
-//         console.log(this.props)
-//     }
-
-//     onSubmit = event => {
-//         const { symbol, data, shares, costPershar } = this.state;
-
-//         //createStock
-//         this.logStock(
-//             symbol,
-//             data.meta_data["3. Last Refreshed"],
-//             data.data["5. volume"],
-//             data.data["1. open"],
-//             data.data["2. high"],
-//             data.data["3. low"],
-//             data.data["4. close"]
-//         )
-//         const payed = shares * costPershar;
-//         const uid = JSON.parse(localStorage.getItem('authUser'))['uid']
-//         this.makeTransaction(
-//             uid,//user email
-//             shares,
-//             symbol,
-//             payed,
-//             null
-//         )
-
-//         //this.props.history.push(ROUTES.LANDING);
-
-//         // sleep(1000);
-//         event.preventDefault();
-
-//     }
-
-//     logStock = (symbol, lastUpdated, volume, open, high, low, close) => {
-//         axios.post('/api/stock/', {
-//             "symbol": symbol,
-//             "lastUpdated": lastUpdated,
-//             "volume": volume,
-//             "_open": open,
-//             "_high": high,
-//             "_low": low,
-//             "_close": close
-//         }).then((res) => {
-//             console.log(res)
-//         }, (error) => { console.log(error) })
-
-//     }
-
-//     makeTransaction = (user, shares, symbol, amount_payed, time) => {
-
-//         //user = models.ForeignKey(StockUser,on_delete=models.CASCADE)
-//         // stock = models.ForeignKey(Stock, on_delete=models.CASCADE, null=True)
-//         // shares = models.IntegerField(null=True)
-//         // amount_payed = models.FloatField(null=True)
-//         // time = models.DateTimeField(blank = True, null = True)
-
-//         axios.post('/api/transactions/', {
-//             "user": user,
-//             "stock": symbol,
-//             "shares": shares,
-//             "amount_payed": amount_payed,
-//             "time": time,
-//         }).then((res) => {
-//             console.log(res.data)
-//             localStorage.setItem('bank', res.data['moneyLeft'])
-//             this.props.history.push(ROUTES.ACCOUNT);
-//         }, (error) => { console.log(error) })
-//     }
-//     onChange = event => {
-//         this.setState({ [event.target.name]: event.target.value });
-//     };
-// }
-
 export default StockPage;

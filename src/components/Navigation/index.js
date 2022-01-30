@@ -26,10 +26,10 @@ const NavigationAuth = () => (
     <div id={"nav-bar-item"}>
       <Link style={style.link} to={ROUTES.LANDING}>BROWSE STOCKS</Link>
     </div>
-    {/* <div id={"nav-bar-item"}>
+    <div id={"nav-bar-item"}>
       <Link style={style.link} to={ROUTES.ACCOUNT}>ACCOUNT</Link>
-    </div> */}
-    <div id={"nav-bar-item"} onClick={()=>{localStorage.setItem('bank','')}}>
+    </div>
+    <div id={"nav-bar-item"}>
       <SignOutButton />
     </div>
   </div>
