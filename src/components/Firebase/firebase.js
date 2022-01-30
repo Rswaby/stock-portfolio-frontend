@@ -1,57 +1,72 @@
-import app from 'firebase/app';
-import 'firebase/auth';
-import 'firebase/database';
+import { initializeApp } from "firebase/app";
+import {
+  GoogleAuthProvider,
+  getAuth,
+  signInWithPopup,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
+  signOut } from "firebase/auth";
+ import {
+  getFirestore,
+  query,
+  getDocs,
+  collection,
+  where,
+  addDoc,
+  } from "firebase/firestore";
 
-const config = {
-  apiKey: process.env.REACT_APP_API_KEY,
-  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-  databaseURL: process.env.REACT_APP_DATABASE_URL,
-  projectId: process.env.REACT_APP_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  const firebaseConfig = {
+    apiKey: process.env.REACT_APP_API_KEY,
+    authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+    projectId:process.env.REACT_APP_PROJECT_ID,
+    storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+    messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+    appId: process.env.REACT_APP_APP_ID,
+    measurementId: process.env.REACT_APP_MEASUREMENT_ID
 };
 
-class Firebase {
-  constructor() {
-    app.initializeApp(config);
 
+class Firebase {
+  
+  constructor() {
+    this.app = initializeApp(firebaseConfig);
+    
     /* Helper */
 
-    this.serverValue = app.database.ServerValue;
-    this.emailAuthProvider = app.auth.EmailAuthProvider;
+    // this.serverValue = app.database.ServerValue;
+    // this.emailAuthProvider = app.auth.EmailAuthProvider;
 
     /* Firebase APIs */
 
-    this.auth = app.auth();
-    this.db = app.database();
+    this.auth = getAuth();
+    this.db = getFirestore(this.app);
 
     /* Social Sign In Method Provider */
 
-    this.googleProvider = new app.auth.GoogleAuthProvider();
-    this.facebookProvider = new app.auth.FacebookAuthProvider();
-    this.twitterProvider = new app.auth.TwitterAuthProvider();
+    this.googleProvider = new GoogleAuthProvider();
+    // this.facebookProvider = new app.auth.FacebookAuthProvider();
+    // this.twitterProvider = new app.auth.TwitterAuthProvider();
   }
 
-  // *** Auth API ***
-
   doCreateUserWithEmailAndPassword = (email, password) =>
-    this.auth.createUserWithEmailAndPassword(email, password);
+    createUserWithEmailAndPassword(this.auth, email, password);
 
   doSignInWithEmailAndPassword = (email, password) =>
-    this.auth.signInWithEmailAndPassword(email, password);
+    signInWithEmailAndPassword(this.auth,email, password);
 
   doSignInWithGoogle = () =>
-    this.auth.signInWithPopup(this.googleProvider);
+    signInWithPopup(this.auth, this.googleProvider);
 
-  doSignInWithFacebook = () =>
-    this.auth.signInWithPopup(this.facebookProvider);
+  // doSignInWithFacebook = () =>
+  //   this.auth.signInWithPopup(this.facebookProvider);
 
-  doSignInWithTwitter = () =>
-    this.auth.signInWithPopup(this.twitterProvider);
+  // doSignInWithTwitter = () =>
+  //   this.auth.signInWithPopup(this.twitterProvider);
 
-  doSignOut = () => this.auth.signOut();
+  doSignOut = () => signOut();
 
-  doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
+  doPasswordReset = email => sendPasswordResetEmail(email);
 
   doSendEmailVerification = () =>
     this.auth.currentUser.sendEmailVerification({
@@ -63,8 +78,9 @@ class Firebase {
 
   // *** Merge Auth and DB User API *** //
 
-  onAuthUserListener = (next, fallback) =>
+  onAuthUserListener = (next, fallback) =>(
     this.auth.onAuthStateChanged(authUser => {
+      console.log("Inside Auth: ", authUser)
       if (authUser) {
         this.user(authUser.uid)
           .once('value')
@@ -90,7 +106,7 @@ class Firebase {
       } else {
         fallback();
       }
-    });
+    }));
 
   // *** User API ***
 
