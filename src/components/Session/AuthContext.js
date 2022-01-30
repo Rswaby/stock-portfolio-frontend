@@ -7,6 +7,7 @@ import {
 import {
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
+    sendEmailVerification,
     sendPasswordResetEmail,
     signOut 
 } from "firebase/auth";
@@ -21,6 +22,7 @@ export function useAuth(){
 }
 export function AuthProvider({ children }){
     const [currentUser , setCurrentUser ] = useState();
+    const [bankInfo, setBank] = useState(0);
     const [isLoading, setIsLoading] = useState(true);
 
     const createStockUser = (id, userName) => {
@@ -33,12 +35,24 @@ export function AuthProvider({ children }){
           console.log(res)
         }, (error) => { console.log(error) })
     }
+
+    const getUserInfoFromDb = (id) => {
+        /**
+         * @id userEmail 
+         */
+        axios.get(`/api/users/${id}`).then((res)=>{
+            setBank(res.data);
+        }).catch((error)=>{
+            console.log(error)
+        })
+    }
     
     const signup = (email, password, fullName) => {
         let promise = new Promise(function (resolve, reject) {
             createUserWithEmailAndPassword(Auth ,email, password).then((ref) => {
               ref.user.displayName = fullName;
               createStockUser(email,fullName);
+              sendEmailVerification(ref.user)
               resolve(ref);
             })
             .catch((error) => reject(error));
@@ -78,6 +92,7 @@ export function AuthProvider({ children }){
     useEffect(() => {
         const unsubscribe = Auth.onAuthStateChanged((user) => {
           setCurrentUser(user);
+          getUserInfoFromDb(user.email);
           setIsLoading(false);
         });
         return unsubscribe;
@@ -85,11 +100,13 @@ export function AuthProvider({ children }){
     console.log("currentUser", currentUser);
     const value = {
         currentUser,
+        bankInfo,
         actions: {
             signUp: signup,
             signIn: signin,
             signOut: signout,
-            passWordReset: passwordReset
+            passWordReset: passwordReset,
+            getUserInfo: getUserInfoFromDb
         }
     };
     return (
