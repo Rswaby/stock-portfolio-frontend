@@ -4,6 +4,12 @@ import {
     useEffect, 
     createContext 
 } from 'react';
+import {
+    signInWithEmailAndPassword,
+    createUserWithEmailAndPassword,
+    sendPasswordResetEmail,
+    signOut 
+} from "firebase/auth";
 
 import { Auth } from '../Firebase/firebasesp';
 
@@ -12,14 +18,13 @@ const AuthContext = createContext();
 export function useAuth(){
     return useContext(AuthContext);
 }
-
 export function AuthProvider({ children }){
     const [currentUser , setCurrentUser ] = useState();
     const [isLoading, setIsLoading] = useState(true);
     
     const signup = (email, password, fullName) => {
         let promise = new Promise(function (resolve, reject) {
-          Auth.createUserWithEmailAndPassword(email, password).then((ref) => {
+            createUserWithEmailAndPassword(Auth ,email, password).then((ref) => {
               ref.user.updateProfile({
                 displayName: fullName,
               });
@@ -32,7 +37,7 @@ export function AuthProvider({ children }){
 
     const signin = (email, password) => {
         let promise = new Promise(function (resolve, reject) {
-          Auth.signInWithEmailAndPassword(email, password)
+            signInWithEmailAndPassword(Auth, email, password)
             .then((ref) => {
               resolve(ref);
             })
@@ -43,12 +48,12 @@ export function AuthProvider({ children }){
         return promise;
       };
     const signout = () => {
-        return Auth.signOut();
+        return signOut(Auth);
       };
 
     const passwordReset = (email) => {
         let promise = new Promise(function (resolve, reject) {
-          Auth.sendPasswordResetEmail(email)
+            sendPasswordResetEmail(Auth,email)
             .then(() => {
               resolve(`Password Reset Email sent to ${email}`);
             })
