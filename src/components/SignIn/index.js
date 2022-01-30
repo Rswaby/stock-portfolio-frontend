@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { useAuth } from '../Session/AuthContext';
-import { SignUpLink } from '../SignUp';
+import * as ROUTES from '../../constants/routes';
 import { PasswordForgetLink } from '../PasswordForget';
 const SignInPage = () => {
   const [email, setEmail] = useState('');
@@ -64,7 +64,9 @@ const SignInPage = () => {
           {error && <p>{"Email or Password is Incorrect"}</p>}
         </form>
         <PasswordForgetLink />
-        <SignUpLink />
+        <p>
+        Don't have an account? <Link to={ROUTES.SIGN_UP}>Sign Up</Link>
+        </p>
       </div>
     </div>
 )};

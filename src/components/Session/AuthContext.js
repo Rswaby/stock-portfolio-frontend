@@ -21,13 +21,23 @@ export function useAuth(){
 export function AuthProvider({ children }){
     const [currentUser , setCurrentUser ] = useState();
     const [isLoading, setIsLoading] = useState(true);
+
+    const createStockUser = (id, userName) => {
+
+        axios.post('/api/users/create/', {
+          "userID": id,
+          "userName": userName,
+          "bank": 50000
+        }).then((res) => {
+          console.log(res)
+        }, (error) => { console.log(error) })
+    }
     
     const signup = (email, password, fullName) => {
         let promise = new Promise(function (resolve, reject) {
             createUserWithEmailAndPassword(Auth ,email, password).then((ref) => {
-              ref.user.updateProfile({
-                displayName: fullName,
-              });
+              ref.user.displayName = fullName;
+            //   createStockUser(email,fullName);
               resolve(ref);
             })
             .catch((error) => reject(error));
@@ -71,7 +81,7 @@ export function AuthProvider({ children }){
         });
         return unsubscribe;
     }, [currentUser]);  
-    
+    console.log("currentUser", currentUser);
     const value = {
         currentUser,
         actions: {
