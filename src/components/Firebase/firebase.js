@@ -16,18 +16,21 @@ import {
   addDoc,
   } from "firebase/firestore";
 
-const config = {
-  apiKey: process.env.REACT_APP_API_KEY,
-  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-  databaseURL: process.env.REACT_APP_DATABASE_URL,
-  projectId: process.env.REACT_APP_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  const firebaseConfig = {
+    apiKey: process.env.REACT_APP_API_KEY,
+    authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+    projectId:process.env.REACT_APP_PROJECT_ID,
+    storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+    messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+    appId: process.env.REACT_APP_APP_ID,
+    measurementId: process.env.REACT_APP_MEASUREMENT_ID
 };
 
+
 class Firebase {
+  
   constructor() {
-    const app = initializeApp(config);
+    this.app = initializeApp(firebaseConfig);
     
     /* Helper */
 
@@ -36,10 +39,8 @@ class Firebase {
 
     /* Firebase APIs */
 
-    
-
-    const auth = getAuth(app);
-    const db = getFirestore(app);
+    this.auth = getAuth();
+    this.db = getFirestore(this.app);
 
     /* Social Sign In Method Provider */
 
@@ -48,16 +49,14 @@ class Firebase {
     // this.twitterProvider = new app.auth.TwitterAuthProvider();
   }
 
-  // *** Auth API ***
-
   doCreateUserWithEmailAndPassword = (email, password) =>
-    this.auth.createUserWithEmailAndPassword(email, password);
+    createUserWithEmailAndPassword(this.auth, email, password);
 
   doSignInWithEmailAndPassword = (email, password) =>
-    this.auth.signInWithEmailAndPassword(email, password);
+    signInWithEmailAndPassword(this.auth,email, password);
 
   doSignInWithGoogle = () =>
-    this.auth.signInWithPopup(this.googleProvider);
+    signInWithPopup(this.auth, this.googleProvider);
 
   // doSignInWithFacebook = () =>
   //   this.auth.signInWithPopup(this.facebookProvider);
@@ -65,9 +64,9 @@ class Firebase {
   // doSignInWithTwitter = () =>
   //   this.auth.signInWithPopup(this.twitterProvider);
 
-  doSignOut = () => this.auth.signOut();
+  doSignOut = () => signOut();
 
-  doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
+  doPasswordReset = email => sendPasswordResetEmail(email);
 
   doSendEmailVerification = () =>
     this.auth.currentUser.sendEmailVerification({
@@ -81,6 +80,7 @@ class Firebase {
 
   onAuthUserListener = (next, fallback) =>(
     this.auth.onAuthStateChanged(authUser => {
+      console.log("Inside Auth: ", authUser)
       if (authUser) {
         this.user(authUser.uid)
           .once('value')
