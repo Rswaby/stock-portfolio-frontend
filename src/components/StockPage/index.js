@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { AuthUserContext } from '../Session';
+import { useAuth } from '../Session/AuthContext';
 import { Link } from 'react-router-dom';
 import * as ROUTES from '../../constants/routes';
 // import sleep from 'sleep';
@@ -42,7 +42,7 @@ class StockPage extends Component {
         const payed = shares * costPershar;
         const uid = JSON.parse(localStorage.getItem('authUser'))['uid']
         this.makeTransaction(
-            uid,
+            uid,//user email
             shares,
             symbol,
             payed,
@@ -130,9 +130,7 @@ class StockPage extends Component {
                         )}
                     </div>
                     <div className={"stock-purchase-or-login"}>
-                        <AuthUserContext.Consumer>
-                            {authUser =>
-                                authUser ? (
+                            {currentUser ? (
                                     <div className="form">
                                         <form className={"login-form"} onSubmit={this.onSubmit}>
                                             <h6 style={{color:"green"}}>Funds avail: ${localStorage.getItem('bank')}</h6>
@@ -154,7 +152,6 @@ class StockPage extends Component {
                                     )
 
                             }
-                        </AuthUserContext.Consumer>
                     </div>
                 </div>
             </div>
