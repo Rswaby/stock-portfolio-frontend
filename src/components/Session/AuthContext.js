@@ -96,7 +96,7 @@ export function AuthProvider({ children }){
           setIsLoading(false);
         });
         return unsubscribe;
-    }, [currentUser,Auth]);  
+    }, [currentUser]);  
     console.log("currentUser", currentUser);
     const value = {
         currentUser,
