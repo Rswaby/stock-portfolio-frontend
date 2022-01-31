@@ -10,7 +10,7 @@ const AccountPage = () => {
   
   const getTransInfo = () => {
     setIsLoading(true)
-    axios.get(`/api/transactions/${currentUser.email}`)
+    axios.get(`${process.env.REACT_APP_BACKEND_PROXY}/api/transactions/${currentUser.email}`)
         .then(res => {
             const data = res.data
             setTransData(data);

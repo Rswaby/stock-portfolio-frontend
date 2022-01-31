@@ -12,7 +12,7 @@ class Search extends Component {
   }
 
   fetchInfo = () => {
-    axios.get(`/api/live/${this.state.keyword}`)
+    axios.get(`${process.env.REACT_APP_BACKEND_PROXY}/api/live/${this.state.keyword}`)
       .then(res => {
         const data = res.data
         this.setState({

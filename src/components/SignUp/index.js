@@ -34,17 +34,6 @@ const SignUpPage = () => {
         break;
   }
 }
-  const createStockUser = (id, userName) => {
-
-    axios.post('/api/users/create/', {
-      "userID": id,
-      "userName": userName,
-      "bank": 50000
-    }).then((res) => {
-      console.log(res)
-    }, (error) => { console.log(error) })
-  }
-
   const handleSubmit = (event) => {
     event.preventDefault();
     if (passwordOne !== passwordTwo){
