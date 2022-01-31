@@ -10,7 +10,6 @@ import AccountPage from '../Account';
 import StockPage from '../StockPage';
 import * as ROUTES from '../../constants/routes';
 import { AuthProvider } from '../Session/AuthContext';
-// import { withAuthentication } from '../Session';
 
 const App = () => (
   <AuthProvider>

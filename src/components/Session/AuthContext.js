@@ -15,6 +15,7 @@ import axios from 'axios';
 
 import { Auth } from '../Firebase/firebasesp';
 
+const DOMAIN = process.env.REACT_APP_BACKEND_PROXY; 
 const AuthContext = createContext();
 
 export function useAuth(){
@@ -27,7 +28,7 @@ export function AuthProvider({ children }){
 
     const createStockUser = (id, userName) => {
 
-        axios.post('/api/users/create/', {
+        axios.post(`${DOMAIN}/api/users/create/`, {
           "userID": id,
           "userName": userName,
           "bank": 50000
@@ -40,7 +41,7 @@ export function AuthProvider({ children }){
         /**
          * @id userEmail 
          */
-        axios.get(`/api/users/${id}`).then((res)=>{
+        axios.get(`${DOMAIN}/api/users/${id}`).then((res)=>{
             setBank(res.data);
         }).catch((error)=>{
             console.log(error)
