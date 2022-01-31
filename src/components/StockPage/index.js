@@ -15,7 +15,7 @@ const StockPage = () => {
 
     const fetchStockInfo = () => {
 
-        axios.get(`${process.env.REACT_APP_BACKEND_PROXY}/api/live/${symbol}/daily`)
+        axios.get(`/api/live/${symbol}/daily`)
             .then((res) => {
                 const data = res.data;
                     setData(data),
@@ -27,7 +27,7 @@ const StockPage = () => {
 
     }
     const logStock = (symbol, lastUpdated, volume, open, high, low, close) => {
-        axios.post(`${process.env.REACT_APP_BACKEND_PROXY}/api/stock/`, {
+        axios.post('/api/stock/', {
             "symbol": symbol,
             "lastUpdated": lastUpdated,
             "volume": volume,
@@ -48,7 +48,7 @@ const StockPage = () => {
         // amount_payed = models.FloatField(null=True)
         // time = models.DateTimeField(blank = True, null = True)
         const { email } = currentUser;
-        axios.post(`${process.env.REACT_APP_BACKEND_PROXY}/api/transactions/`, {
+        axios.post('/api/transactions/', {
             "user": user,
             "stock": symbol,
             "shares": shares,
@@ -139,6 +139,7 @@ const StockPage = () => {
                             ) : (
                                     <Link to={"/signin"}>SIGN IN TO BUY SHARES</Link>
                                 )
+
                         }
                 </div>
             </div>
