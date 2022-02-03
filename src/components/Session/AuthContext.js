@@ -27,7 +27,7 @@ export function AuthProvider({ children }){
 
     const createStockUser = (id, userName) => {
 
-        axios.post('/api/users/create/', {
+        axios.post(`${process.env.REACT_APP_BACKEND_PROXY}/api/users/create/`, {
           "userID": id,
           "userName": userName,
           "bank": 50000
@@ -40,7 +40,7 @@ export function AuthProvider({ children }){
         /**
          * @id userEmail 
          */
-        axios.get(`/api/users/${id}`).then((res)=>{
+        axios.get(`${process.env.REACT_APP_BACKEND_PROXY}/api/users/${id}`).then((res)=>{
             setBank(res.data);
         }).catch((error)=>{
             console.log(error)
